@@ -1,4 +1,5 @@
 import {AdvertisementController} from "./controller/AdvertisementController";
+import {ShelterController} from "./controller/ShelterController";
 
 export const Routes = [{
     method: "get",
@@ -20,4 +21,42 @@ export const Routes = [{
     route: "/advertisements",
     controller: AdvertisementController,
     action: "remove"
-}];
+},
+    {
+        method: "get",
+        route: "/shelters",
+        controller: ShelterController,
+        action: "all"
+    },
+    {
+        method: "post",
+        route: "/shelters",
+        controller: ShelterController,
+        action: "save"
+    },
+    {
+        method: "get",
+        route: "/shelters/:id",
+        controller: ShelterController,
+        action: "one"
+    },
+    {
+        method: "delete",
+        route: "/shelters/:id",
+        controller: ShelterController,
+        action: "remove"
+    },
+    {
+        method: "post",
+        route: "/shelters/:id/advertisements",
+        controller: ShelterController,
+        action: "addAdvertisement"
+    },
+    {
+        method: "get",
+        route: "/shelters/:id/advertisements",
+        controller: ShelterController,
+        action: "getAdvertisements"
+    }
+
+];

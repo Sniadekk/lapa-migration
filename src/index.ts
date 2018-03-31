@@ -10,7 +10,10 @@ createConnection().then(async connection => {
 
     // create express app
     const app = express();
+    app.use(express.static('./public'));
+
     app.use(bodyParser.json());
+
 
     // register express routes from defined application routes
     Routes.forEach(route => {
