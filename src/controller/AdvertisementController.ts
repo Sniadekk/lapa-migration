@@ -1,16 +1,20 @@
 import {getRepository} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {Advertisement} from "../entity/Advertisement";
-import {Shelter} from "../entity/Shelter";
 import {baseToImage} from "../functions/baseToImage";
 
 export class AdvertisementController {
 
     private advertisementRepository = getRepository(Advertisement);
-    private shelterRepository = getRepository(Shelter);
 
     async all(request: Request, response: Response, next: NextFunction) {
-        return this.advertisementRepository.find();
+        const options: string[] = ["found", "seeking", "missing"];
+        if (options.includes(request.query.status)) {
+            return this.advertisementRepository
+                .createQueryBuilder("advertisement")
+                .where("advertisement.status = :status", {status: request.query.status})
+                .getMany()
+        } return this.advertisementRepository.find();
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
