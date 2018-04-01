@@ -57,6 +57,12 @@ export const Routes = [{
         route: "/shelters/:id/advertisements",
         controller: ShelterController,
         action: "getAdvertisements"
+    },
+    {
+        method: "get",
+        route: "/advertisements/:status(missing|seeking|found)",
+        controller: AdvertisementController,
+        action: "getAdvertisementsByStatus"
     }
 
 ];

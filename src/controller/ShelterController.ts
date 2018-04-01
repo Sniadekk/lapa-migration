@@ -32,14 +32,10 @@ export class ShelterController {
     }
 
     async getAdvertisements(request: Request, response: Response, next: NextFunction) {
-        // return this.shelterRepository.find({
-        //     relations: ["advertisements"],
-        //     where: {shelter_id: request.params.id}
-        // });
-        const shelter = await this.shelterRepository.createQueryBuilder("shelter")
+        return this.shelterRepository.createQueryBuilder("shelter")
+            .select("advertisements")
             .where("shelter.id = :id", {id: request.params.id})
-            .leftJoinAndSelect("shelter.advertisements", "advertisement")
+            .leftJoin("shelter.advertisements", "advertisements")
             .getOne();
-        return shelter.advertisements;
     }
 }

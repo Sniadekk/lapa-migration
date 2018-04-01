@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany} from "typeorm";
 import {Shelter} from "./Shelter";
+import {Image} from "./Image";
 
 @Entity()
 export class Advertisement {
@@ -42,13 +43,16 @@ export class Advertisement {
     status: "missing" | "seeking" | "found";
 
     @ManyToOne(type => Shelter, shelter => shelter.advertisements,
-        {   nullable:true,
+        {
+            nullable: true,
             cascadeInsert: true,
             cascadeUpdate: true,
             eager: true
         })
-    @JoinColumn({name:"shelter_id"})
-    shelter: Shelter
 
+    @JoinColumn({name: "shelter_id"})
+    shelter: Shelter;
 
+    @OneToMany(type => Image, image => image.advertisement)
+    images: Image[]
 }
