@@ -26,10 +26,10 @@ export class Advertisement {
     @Column({length: 20})
     contact: string;
     //Data for google maps on the front end
-    @Column()
+    @Column({default:0.0})
     lng: number;
 
-    @Column()
+    @Column({default:0.0})
     lat: number;
 
     @Column({

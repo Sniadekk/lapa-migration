@@ -6,8 +6,8 @@ import {getRepository} from "typeorm";
 export const createImage = (base64: string, advertisement: Advertisement) => {
     const imageRepository = getRepository(Image);
     const image = new Image();
-    image.file = baseToImage(base64);
-    console.log(advertisement);
+    //slice to get rid of public/
+    image.file = baseToImage(base64).slice(7);
     image.advertisement = advertisement;
     imageRepository.save(image);
 };

@@ -3,6 +3,7 @@ import {NextFunction, Request, Response} from "express";
 import {Advertisement} from "../entity/Advertisement";
 import {Image} from "../entity/Image";
 import {createImage} from "../functions/createImage";
+import {config} from "../index";
 
 export class AdvertisementController {
 
@@ -14,6 +15,7 @@ export class AdvertisementController {
             return this.advertisementRepository
                 .createQueryBuilder("advertisement")
                 .where("advertisement.status = :status", {status: request.query.status})
+                 .leftJoinAndSelect("advertisement.images", "images")
                 .getMany()
         }
         return this.advertisementRepository.find();
@@ -24,9 +26,10 @@ export class AdvertisementController {
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
+        console.log(request.body);
         const advertisement = await this.advertisementRepository.save(request.body);
         advertisement.images.map((image) => createImage(image, {...advertisement, images: null}));
-        return advertisement
+        response.send({link: "/advertisements/" + advertisement.id, statusText: "Created"});
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {

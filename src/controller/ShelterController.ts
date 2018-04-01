@@ -17,7 +17,6 @@ export class ShelterController {
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
-        console.log(request);
         return this.shelterRepository.save(request.body);
     }
 

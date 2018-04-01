@@ -5,7 +5,9 @@ import * as bodyParser from "body-parser";
 import {Request, Response} from "express";
 import {Routes} from "./routes";
 import {Advertisement} from "./entity/Advertisement";
-
+export const config = {
+    url:"http://127.0.0.1:3000/"
+};
 createConnection().then(async connection => {
 
     // create express app
