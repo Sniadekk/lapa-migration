@@ -1,7 +1,8 @@
 import {getRepository} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {Advertisement} from "../entity/Advertisement";
-import {baseToImage} from "../functions/baseToImage";
+import {Image} from "../entity/Image";
+import {createImage} from "../functions/createImage";
 
 export class AdvertisementController {
 
@@ -14,7 +15,8 @@ export class AdvertisementController {
                 .createQueryBuilder("advertisement")
                 .where("advertisement.status = :status", {status: request.query.status})
                 .getMany()
-        } return this.advertisementRepository.find();
+        }
+        return this.advertisementRepository.find();
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
@@ -22,9 +24,9 @@ export class AdvertisementController {
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
-        console.log(request);
-        //const images = await request.body.images.map( (item) => baseToImage(item));
-        return this.advertisementRepository.save(request.body);
+        const advertisement = await this.advertisementRepository.save(request.body);
+        advertisement.images.map((image) => createImage(image, {...advertisement, images: null}));
+        return advertisement
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {

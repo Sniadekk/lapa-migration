@@ -2,6 +2,7 @@ import {getRepository} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {Shelter} from "../entity/Shelter";
 import {Advertisement} from "../entity/Advertisement";
+import {createImage} from "../functions/createImage";
 
 export class ShelterController {
     private shelterRepository = getRepository(Shelter);
@@ -26,7 +27,8 @@ export class ShelterController {
 
     async addAdvertisement(request: Request, response: Response, next: NextFunction) {
         const shelter = await this.shelterRepository.findOneById(request.params.id);
-        const advertisement = request.body;
+        const advertisement = await this.advertisementRepository.save(request.body);
+        advertisement.images.map((image) => createImage(image, {...advertisement, images: null}));
         advertisement.shelter = shelter;
         return this.advertisementRepository.save(advertisement);
     }

@@ -53,6 +53,7 @@ export class Advertisement {
     @JoinColumn({name: "shelter_id"})
     shelter: Shelter;
 
-    @OneToMany(type => Image, image => image.advertisement)
+    @OneToMany(type => Image, image => image.advertisement,
+        {eager: true})
     images: Image[]
 }
