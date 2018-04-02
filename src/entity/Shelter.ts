@@ -22,10 +22,10 @@ export class Shelter {
     //Data for google maps on the front end
 
     @Column()
-    lng: number;
+    longitude: number;
 
     @Column()
-    lat: number;
+    latitude: number;
 
     @OneToMany(type => Advertisement, advertisement => advertisement.shelter)
     advertisements: Advertisement[]

@@ -27,10 +27,10 @@ export class Advertisement {
     contact: string;
     //Data for google maps on the front end
     @Column({default:0.0})
-    lng: number;
+    longitude: number;
 
     @Column({default:0.0})
-    lat: number;
+    latitude: number;
 
     @Column({
         type: "enum",
